@@ -1,4 +1,4 @@
-from fastapi import FastAPI,HTTPException
+from fastapi import FastAPI,HTTPException 
 import joblib
 import pandas as pd
 from pathlib import Path

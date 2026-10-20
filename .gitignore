@@ -1,0 +1,25 @@
+# Spotify credentials and environment variables
+.env
+.env.*
+!.env.example
+
+# Python temporary files
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# macOS files
+.DS_Store
+
+# SQLite database files
+*.db
+*.sqlite3
+
+# Spotify authentication tokens
+.cache
+.cache-*
+.spotify_cache*
