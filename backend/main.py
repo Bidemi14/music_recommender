@@ -1,4 +1,5 @@
 from fastapi import FastAPI,HTTPException,Request
+from backend import database
 import joblib
 import pandas as pd
 from pathlib import Path

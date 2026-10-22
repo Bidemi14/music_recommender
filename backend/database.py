@@ -37,13 +37,7 @@ CREATE TABLE IF NOT EXISTS playlist_songs (
 
 
 
-cursor.execute("SELECT COUNT(*) FROM playlist_songs")
-print("Songs:", cursor.fetchall())
 
-cursor.execute("""SELECT song_title
-FROM playlist_songs
-""")
-print("Songs:", cursor.fetchall())
 
 connection.commit()
 
