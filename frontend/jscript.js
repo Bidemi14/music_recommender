@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const savePlaylistButton = document.getElementById("savePlaylistButton");
     const playlistName = document.getElementById("playlistName");
     let recommendedSongs = [];
+    let selectedSong = "";
 
 
 
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             results.innerHTML = "";
+            selectedSong = song;
 
             recommendedSongs = data.recommendations;
 
@@ -109,7 +111,35 @@ for (const song of recommendedSongs) {
     }
 }
 
-    alert("Playlist and songs saved successfully!");
+    // Save the same recommendations to Spotify
+ const spotifyResponse = await fetch(
+    `http://127.0.0.1:8001/spotify/create-recommended-playlist?song=${encodeURIComponent(selectedSong)}&playlist_name=${encodeURIComponent(name)}`,
+    {
+        method: "POST",
+        credentials: "include"
+    }
+);
+
+const spotifyData = await spotifyResponse.json();
+
+if (!spotifyResponse.ok) {
+    throw new Error(
+        spotifyData.detail || "Could not create Spotify playlist"
+    );
+}
+
+// Show the Spotify playlist link
+const spotifyLink = document.createElement("a");
+
+spotifyLink.href = spotifyData.playlist_url;
+spotifyLink.textContent = "Open your Spotify playlist";
+spotifyLink.target = "_blank";
+spotifyLink.rel = "noopener noreferrer";
+
+const results = document.getElementById("spotifyResult");
+results.replaceChildren(spotifyLink);
+
+alert("Playlist saved to SQLite and Spotify successfully!");
 
     } catch (error) {
     console.error(error);
