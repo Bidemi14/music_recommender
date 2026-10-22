@@ -244,8 +244,8 @@ def spotify_callback(request: Request):
         key="spotify_session",
         value=session_id,
         httponly=True,
-        samesite="lax",
-        secure=False,
+        samesite="none",
+        secure=True,
         max_age=86400
     )
 
