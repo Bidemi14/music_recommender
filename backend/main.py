@@ -17,6 +17,9 @@ from cryptography.fernet import Fernet
 import json
 import hashlib
 import time
+from fastapi.staticfiles import StaticFiles #allows to serve files 
+from fastapi.responses import FileResponse #allows to  html 
+
 
 env_path = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(env_path)
@@ -55,6 +58,14 @@ class SongCreate(BaseModel):
     artist_name: str
 
 app = FastAPI()
+
+FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
+
+app.mount(
+    "/static",
+    StaticFiles(directory=FRONTEND_DIR),
+    name="static"
+)
 spotify_auth = SpotifyOAuth(
     client_id=spotify_client_id,
     client_secret=spotify_client_secret,
@@ -87,7 +98,7 @@ recommendation_features = pd.read_pickle(
 
 @app.get("/")
 def home():
-    return {"message": "Welcome to my music recommender"}
+    return FileResponse(FRONTEND_DIR / "index.html")
 
 @app.get("/recommend")
 def recommend(song: str):
@@ -244,7 +255,7 @@ def spotify_callback(request: Request):
         key="spotify_session",
         value=session_id,
         httponly=True,
-        samesite="none",
+        samesite="none",#allows cookie to be sent to other sites
         secure=True,
         max_age=86400
     )

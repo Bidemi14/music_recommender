@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             const response = await fetch(
-                `https://music-recommender-5rvx.onrender.com/recommend?song=${encodeURIComponent(song)}`
+                `/recommend?song=${encodeURIComponent(song)}`
             );
 
             const data = await response.json();
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-    const response = await fetch("https://music-recommender-5rvx.onrender.com/playlists", {
+    const response = await fetch("/playlists", {
         method: "POST",
 
         headers: {
@@ -91,7 +91,7 @@ const playlistId = data.playlist_id;
 for (const song of recommendedSongs) {
 
     const songResponse = await fetch(
-        `https://music-recommender-5rvx.onrender.com/playlists/${playlistId}/songs`,
+        `/playlists/${playlistId}/songs`,
         {
             method: "POST",
 
@@ -113,7 +113,7 @@ for (const song of recommendedSongs) {
 
     // Save the same recommendations to Spotify
  const spotifyResponse = await fetch(
-    `https://music-recommender-5rvx.onrender.com/spotify/create-recommended-playlist?song=${encodeURIComponent(selectedSong)}&playlist_name=${encodeURIComponent(name)}`,
+    `/spotify/create-recommended-playlist?song=${encodeURIComponent(selectedSong)}&playlist_name=${encodeURIComponent(name)}`,
     {
         method: "POST",
         credentials: "include"
